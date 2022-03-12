@@ -8,12 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const msgerChat = get(".msger-chat");
 
     const real_username = document.querySelector("#user-id-n").innerHTML;
-    console.log(real_username)
-    EnterRoom("man");
+    const room_need = document.querySelector("#user-id-n-r").innerHTML;
+    console.log(room_need)
+    EnterRoom(room_need);
 
     msgerForm.addEventListener("submit", event => {
     event.preventDefault();
-    socket.emit("incoming", {"msg":document.querySelector("#msg_input").value, "room":"man", "username":real_username})
+    socket.emit("incoming", {"msg":document.querySelector("#msg_input").value, "room":room_need, "username":real_username})
     msgerInput.value = "";
  });
 
@@ -30,7 +31,32 @@ document.addEventListener("DOMContentLoaded", () => {
          }
 }
 
+});
+
+socket.on('user_msg', data => {
+//      const p = document.createElement('p');
+//        p.setAttribute("class", "system-msg");
+//        p.innerHTML = data.msg;
+//        document.querySelector('#invoice').append(p);
+//        console.log("man")
+        // Autofocus on text box
+
+        if (data.msg) {
+
+        if (data.username == real_username) {
+                appendMessage("", PERSON_IMG, "right", "you joined the room")
+
+         }
+         else {
+            appendMessage("", PERSON_IMG, "left", data.msg)
+         }
+}
+
+       ;
+
+
 })
+
 //displaying message
 function appendMessage(name, img, side, text) {
   const msgHTML = `
@@ -70,7 +96,7 @@ function random(min, max) {
 
 
     function EnterRoom(room) {
-        socket.emit("join", {"room": "man", "username": real_username})
+        socket.emit("join", {"room": room, "username": real_username})
     }
 
 

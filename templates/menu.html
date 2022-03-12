@@ -46,7 +46,7 @@
                 <div class="collapse" id="room{{user_room.id}}">
                   <div class="card card-body">
                       ID:{{user_room.meeting_id}}
-                      <a class="btn btn-primary" href="{{url_for('chat_page', room=user_room.meeting_name)}}">Enter Room</a>
+                      <a class="btn btn-primary" href="{{url_for('chat_page', room_name=user_room.meeting_name, room_id=user_room.meeting_id)}}">Enter Room</a>
                   </div>
                 </div>
                 {% endif %}
@@ -128,7 +128,7 @@
 
 <script>
 
-
+document.querySelector("body").style.height = 300px
 
 
 

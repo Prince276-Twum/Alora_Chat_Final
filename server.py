@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import LoginManager, login_user, current_user, UserMixin, logout_user, login_required
 from sqlalchemy.orm import relationship
-from flask_socketio import SocketIO, send, join_room, leave_room
+from flask_socketio import SocketIO, send, join_room, leave_room, emit
 import time
 
 app = Flask(__name__)
@@ -159,7 +159,8 @@ def menu_page():
             return redirect(url_for('menu_page'))
     elif join_form.join.data:
         if join_form.validate_on_submit():
-            return redirect(url_for('chat_room'))
+            search_id = ChartRoom.query.filter_by(meeting_id=join_form.meeting_id2.data).first()
+            return redirect(url_for('chat_page', room_name=search_id.meeting_name, room_id=search_id.meeting_id ))
 
     return render_template('menu.html', form=create_form, form2=join_form, rooms=user_room, )
 
@@ -172,24 +173,23 @@ def logout():
 
 
 # chat sections
-@app.route("/chat-page/<room>")
-def chat_page(room):
-    return render_template("chat_room.html", user_room=room)
+@app.route("/chat-page/<room_name>/<room_id>")
+def chat_page(room_name, room_id):
+    return render_template("chat_room.html", user_room=room_name, rooms_id=room_id)
 
 
 @socketio.on("incoming")
 def message_handler(data):
-    print(data)
     send(data, room=data["room"])
 
 
 # user joining a room
 @socketio.on("join")
 def join_handler(data):
-    chat_room = data["room"]
-    join_room(chat_room)
-    send({"msg": "user joined the room"}, room=chat_room)
+    print(data)
+    join_room(data['room'])
+    emit("user_msg", {"msg": "joined the room", "username": data["username"]}, room=data["room"])
 
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True)
+    app.run()
