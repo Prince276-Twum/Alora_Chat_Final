@@ -160,7 +160,7 @@ def menu_page():
     elif join_form.join.data:
         if join_form.validate_on_submit():
             search_id = ChartRoom.query.filter_by(meeting_id=join_form.meeting_id2.data).first()
-            return redirect(url_for('chat_page', room_name=search_id.meeting_name, room_id=search_id.meeting_id ))
+            return redirect(url_for('chat_page', user_room=search_id.meeting_name, rooms_id=search_id.meeting_id ))
 
     return render_template('menu.html', form=create_form, form2=join_form, rooms=user_room, )
 
@@ -186,7 +186,6 @@ def message_handler(data):
 # user joining a room
 @socketio.on("join")
 def join_handler(data):
-    print(data)
     join_room(data['room'])
     emit("user_msg", {"msg":  f"{data['username']}   joined the room", "username": data["username"]}, room=data["room"])
 

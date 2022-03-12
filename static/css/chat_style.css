@@ -33,7 +33,7 @@ body {
   justify-content: space-between;
   width: 100%;
   margin: 25px 10px;
-  height: calc(750px - 50px);
+  height: calc(660px - 50px);
   border: var(--border);
   border-radius: 5px;
   background: var(--msger-bg);
