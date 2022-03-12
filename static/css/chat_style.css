@@ -32,7 +32,6 @@ body {
   flex-flow: column wrap;
   justify-content: space-between;
   width: 100%;
-  max-width: 867px;
   margin: 25px 10px;
   height: calc(750px - 50px);
   border: var(--border);
