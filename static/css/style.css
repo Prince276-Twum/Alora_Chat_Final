@@ -38,11 +38,13 @@
 
 
 
+
+
     }
 
     @media (min-width:1025px){
         .chat_logo{
-            width:10%
+            width:7%
         }
 
 
@@ -118,6 +120,11 @@
         width:27%;
     }
 
+    body{
+    zoom: 1.8
+}
+
+
 
 
     #sidebar.view-sidebar {
@@ -138,3 +145,4 @@
 #rightside-pannel {
     overflow: hidden; /* Make this div take up the rest of the horizontal space, and no more */
 }
+

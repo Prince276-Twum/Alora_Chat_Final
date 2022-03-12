@@ -188,8 +188,8 @@ def message_handler(data):
 def join_handler(data):
     print(data)
     join_room(data['room'])
-    emit("user_msg", {"msg": "joined the room", "username": data["username"]}, room=data["room"])
+    emit("user_msg", {"msg":  f"{data['username']}   joined the room", "username": data["username"]}, room=data["room"])
 
 
 if __name__ == "__main__":
-    app.run()
+    socketio.run(app,debug=True)
