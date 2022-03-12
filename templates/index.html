@@ -1,0 +1,42 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+
+
+{% block styles %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" >
+{% endblock %}
+
+
+
+{% block content %}
+
+<div style="height: 100px; background-color:#346980">
+    <img class="chat_logo" src="http://www.mericar.com/chat_logo.png" >
+    <h1 class="logo_text"> Alora-Chat</h1>
+</div>
+
+
+<div class="container">
+    <div>
+        {{csrf_token}}
+        {% if show_login %}
+            <h2 class="registerform_h1">Login Now!</h2>
+            <p class="register_text">Enter you username and password to start Alora-Chat </p>
+        {% else %}
+            <h2 class="registerform_h1">Get started!</h2>
+            <p class="register_text">First time here? Register to start using Rchat</p>
+
+        {% endif %}
+        {{ wtf.quick_form(form, button_map={"create":"danger"}, novalidate=true) }}
+        <hr>
+        {% if  show_login %}
+            <p class="register_text2">Have not registered?<a href="{{url_for('register_user')}}"> Register here.</a></p>
+        {% else %}
+            <p class="register_text2">Already registered? <a href="{{url_for('login_page')}}">Login here</a>.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

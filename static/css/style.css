@@ -1,0 +1,140 @@
+.chat_logo{
+    width:17%
+}
+
+
+.container{
+    padding: 2% 20%;
+
+}
+
+.register_text{
+    margin-bottom: 4px;
+    font-size: 0.8em;
+    color: grey;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.register_text2{
+    font-size: 1em;
+    color: grey;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+
+.registerform_h1{
+
+    color: #21ade7;
+    font-size: 2rem;
+}
+
+
+
+@media(min-width: 801px){
+    .chat_logo{
+        width: 12%;
+    }
+
+
+
+
+    }
+
+    @media (min-width:1025px){
+        .chat_logo{
+            width:10%
+        }
+
+
+    }
+
+
+.help-block{
+    color: red
+}
+
+
+.logo_text{
+    display:inline;
+    color: #21ade7;
+
+}
+
+
+.log_out{
+    display: inline-block;
+    position: relative;
+    left: 50%;
+    text-decoration: none;
+    font-size: 30px
+
+}
+
+.log_out:hover{
+    text-decoration: none;
+}
+
+
+
+
+#main-section {
+ /*   overflow: hidden;  Makee this div contain its floated children */
+    width: 100%;
+}
+
+#sidebar {
+    margin-top: 0;
+    float: left; /* Make this div as wide as its contents */
+    min-height: 96vh;
+    padding-left: 1em;
+    padding-top: 20px;
+    padding-right:1em;
+    border-right: 0.5px solid #898c91;
+}
+
+#sidebar p {
+    padding-left: 2em;
+    padding-right:2em;
+}
+
+#sidebar p:hover {
+    background-color: #ffc107;
+}
+
+#sidebar h4 {padding-left: 0.5em;}
+
+
+#sidebar.view-sidebar {display: none;}
+
+#show-sidebar-button {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s;
+    color: #335177;
+}
+
+@media (max-width: 567px) {
+    .chat_logo{
+        width:27%;
+    }
+
+
+
+    #sidebar.view-sidebar {
+        display: block;
+    }
+
+    #show-sidebar-button {
+        visibility: visible;
+        opacity: 1;
+    }
+}
+
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+#rightside-pannel {
+    overflow: hidden; /* Make this div take up the rest of the horizontal space, and no more */
+}
