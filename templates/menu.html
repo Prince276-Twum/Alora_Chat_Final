@@ -87,6 +87,7 @@
         </button>
       </div>
       <div class="modal-body">
+          {{csrf_token}}
           {{ wtf.quick_form(form, novalidate=True) }}
         </div>
       </div>
