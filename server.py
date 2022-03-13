@@ -33,7 +33,7 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
-socketio = SocketIO(app, manage_session=False)
+socketio = SocketIO(app)
 
 
 # user database
