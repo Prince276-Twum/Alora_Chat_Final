@@ -113,7 +113,7 @@ class JoinForm(FlaskForm):
 # creating meeting forms
 class CreateForm(FlaskForm):
     meeting_id = StringField()
-    meeting_name = StringField(validators=[DataRequired(), Length(min=6, max=20)], )
+    meeting_name = StringField(validators=[DataRequired()])
     meeting_passcode = PasswordField(validators=[DataRequired(), Length(min=7, max=20)])
     create = SubmitField()
 
