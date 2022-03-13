@@ -13,7 +13,7 @@ import time
 
 app = Flask(__name__)
 Bootstrap(app)
-socketio = SocketIO(app)
+socketio = SocketIO(app, manage_session=False)
 app.config['WTF_CSRF_SECRET_KEY'] = "b'f\xfa\x8b{X\x8b\x9eM\x83l\x19\xad\x84\x08\xaa"
 
 app.config["SECRET_KEY"] = os.environ.get("SECRET")
