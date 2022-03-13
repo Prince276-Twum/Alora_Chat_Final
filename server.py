@@ -49,8 +49,8 @@ class ChartRoom(db.Model):
 
 # registration forms
 class RegistrationForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired(), Length(min=3, max=20)])
-    password = PasswordField("Password", validators=[DataRequired(), Length(min=3, max=30)])
+    username = StringField("Username", validators=[DataRequired(), Length(min=5, max=20)])
+    password = PasswordField("Password", validators=[DataRequired(), Length(min=5, max=30)])
     comfirm_password = PasswordField("Comfirm Password", validators=[EqualTo("password"), DataRequired()])
     create = SubmitField()
 
@@ -63,18 +63,21 @@ def verify_password(form, field):
     user_login_db = User.query.filter_by(username=form.username.data).first()
     if user_login_db:
         if not check_password_hash(password=form.password.data, pwhash=user_login_db.password):
-            raise ValidationError("incorrect Password")
+            raise ValidationError("incorrect username or Password")
+    else:
+        raise ValidationError("incorrect username or Password")
+
 
 
 # login forms
 class LoginForms(FlaskForm):
-    username = StringField("Username", validators=[DataRequired()])
+    username = StringField("Username", validators=[DataRequired(), verify_password])
     password = PasswordField("Password", validators=[DataRequired(), verify_password])
     create = SubmitField()
 
-    def validate_username(self, username):
-        if User.query.filter_by(username=username.data).first() is None:
-            raise ValidationError("incorrect username")
+    # def validate_username(self, username):
+    #     if User.query.filter_by(username=username.data).first() is None:
+    #         raise ValidationError("incorrect username")
 
 
 # join room passcode verification
@@ -82,25 +85,28 @@ def join_verify(form, field):
     wanted_room = ChartRoom.query.filter_by(meeting_id=form.meeting_id2.data).first()
     if wanted_room:
         if not check_password_hash(password=form.passcode2.data, pwhash=wanted_room.meeting_passcode):
-            raise ValidationError("incorrect passcode")
+            raise ValidationError("incorrect passcode or meeting id")
+    else:
+        raise ValidationError("incorrect passcode or meeting id")
+
 
 
 # joining meeting form
 class JoinForm(FlaskForm):
-    meeting_id2 = StringField(label="Meeting ID", validators=[DataRequired()])
+    meeting_id2 = StringField(label="Meeting ID", validators=[DataRequired(), join_verify])
     passcode2 = PasswordField(label="Passcode", validators=[DataRequired(), join_verify])
     join = SubmitField()
 
-    def validate_meeting_id2(self, meeting_id2):
-        if ChartRoom.query.filter_by(meeting_id=meeting_id2.data).first() is None:
-            raise ValidationError("There is no such room")
+    # def validate_meeting_id2(self, meeting_id2):
+    #     if ChartRoom.query.filter_by(meeting_id=meeting_id2.data).first() is None:
+    #         raise ValidationError("There is no such room")
 
 
 # creating meeting forms
 class CreateForm(FlaskForm):
     meeting_id = StringField()
-    meeting_name = StringField(validators=[DataRequired()], )
-    meeting_passcode = PasswordField(validators=[DataRequired()])
+    meeting_name = StringField(validators=[DataRequired(), Length(min=6, max=20)], )
+    meeting_passcode = PasswordField(validators=[DataRequired(), Length(min=7, max=20)])
     create = SubmitField()
 
 
@@ -191,4 +197,4 @@ def join_handler(data):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
