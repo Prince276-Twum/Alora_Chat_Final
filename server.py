@@ -14,15 +14,13 @@ import time
 app = Flask(__name__)
 Bootstrap(app)
 socketio = SocketIO(app, manage_session=False)
-
-# app.secret_key=os.environ.get('SECRET')
 app.config['WTF_CSRF_SECRET_KEY'] = "b'f\xfa\x8b{X\x8b\x9eM\x83l\x19\xad\x84\x08\xaa"
 
-# Configure database
-# app.config['SQLALCHEMY_DATABASE_URI']=os.environ.get('DATABASE_URL')
+app.config["SECRET_KEY"] = os.environ.get("SECRET")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///user.db")
 
-app.secret_key = "secrete"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///user.db"
+# app.secret_key = "secrete"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///user.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
