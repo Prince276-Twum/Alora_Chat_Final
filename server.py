@@ -73,7 +73,7 @@ def verify_password(form, field):
 class LoginForms(FlaskForm):
     username = StringField("Username", validators=[DataRequired(), verify_password])
     password = PasswordField("Password", validators=[DataRequired(), verify_password])
-    create = SubmitField()
+    create = SubmitField(label="Sign in")
 
     # def validate_username(self, username):
     #     if User.query.filter_by(username=username.data).first() is None:
