@@ -27,7 +27,7 @@
     <a href="{{url_for('logout')}}" class="log_out" style="color: white;">Logout</a>
 </div>
 
-
+{{csrf_token}}
 
 <div id="main-section">
 
@@ -105,7 +105,7 @@
         </button>
       </div>
       <div class="modal-body">
-          {{csrf_token}}
+
           {{ wtf.quick_form(form2, novalidate=True) }}
         </div>
       </div>
