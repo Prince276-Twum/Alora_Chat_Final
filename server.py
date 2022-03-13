@@ -14,12 +14,14 @@ import time
 app = Flask(__name__)
 Bootstrap(app)
 socketio = SocketIO(app)
-app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///user.db")
-# app.secret_key = "secrete"
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///user.db"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['WTF_CSRF_SECRET_KEY'] = "b'f\xfa\x8b{X\x8b\x9eM\x83l\x19\xad\x84\x08\xaa"
 
+# app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
+# app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///user.db")
+
+app.secret_key = "secrete"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///user.db"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 login_manager = LoginManager()
@@ -72,7 +74,6 @@ def verify_password(form, field):
         raise ValidationError("incorrect username or Password")
 
 
-
 # login forms
 class LoginForms(FlaskForm):
     username = StringField("Username", validators=[DataRequired(), verify_password])
@@ -92,7 +93,6 @@ def join_verify(form, field):
             raise ValidationError("incorrect passcode or meeting id")
     else:
         raise ValidationError("incorrect passcode or meeting id")
-
 
 
 # joining meeting form
@@ -170,7 +170,7 @@ def menu_page():
     elif join_form.join.data:
         if join_form.validate_on_submit():
             search_id = ChartRoom.query.filter_by(meeting_id=join_form.meeting_id2.data).first()
-            return redirect(url_for('chat_page', room_name=search_id.meeting_name, room_id=search_id.meeting_id ))
+            return redirect(url_for('chat_page', room_name=search_id.meeting_name, room_id=search_id.meeting_id))
 
     return render_template('menu.html', form=create_form, form2=join_form, rooms=user_room, )
 
@@ -197,7 +197,7 @@ def message_handler(data):
 @socketio.on("join")
 def join_handler(data):
     join_room(data['room'])
-    emit("user_msg", {"msg":  f"{data['username']}   joined the room", "username": data["username"]}, room=data["room"])
+    emit("user_msg", {"msg": f"{data['username']}   joined the room", "username": data["username"]}, room=data["room"])
 
 
 if __name__ == "__main__":
