@@ -26,9 +26,6 @@
     <h1 class="logo_text"> Alora-Chat</h1>
     <a href="{{url_for('logout')}}" class="log_out" style="color: white;">Logout</a>
 </div>
-
-{{csrf_token}}
-
 <div id="main-section">
 
         <!-- Sidebar start -->
@@ -79,6 +76,7 @@
 </div>
 
 <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {{csrf_token}}
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header border-bottom-0">
@@ -87,7 +85,6 @@
         </button>
       </div>
       <div class="modal-body">
-          {{csrf_token}}
           {{ wtf.quick_form(form, novalidate=True) }}
         </div>
       </div>
@@ -98,6 +95,7 @@
 
 
 <div class="modal fade" id="loginModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{{csrf_token}}
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header border-bottom-0">
@@ -106,7 +104,6 @@
         </button>
       </div>
       <div class="modal-body">
-
           {{ wtf.quick_form(form2, novalidate=True) }}
         </div>
       </div>
