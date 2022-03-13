@@ -9,7 +9,7 @@ from flask_login import LoginManager, login_user, current_user, UserMixin, logou
 from sqlalchemy.orm import relationship
 from flask_socketio import SocketIO, send, join_room, leave_room, emit
 import os
-import time
+
 
 app = Flask(__name__)
 Bootstrap(app)
