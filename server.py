@@ -8,14 +8,17 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import LoginManager, login_user, current_user, UserMixin, logout_user, login_required
 from sqlalchemy.orm import relationship
 from flask_socketio import SocketIO, send, join_room, leave_room, emit
+import os
 import time
 
 app = Flask(__name__)
 Bootstrap(app)
 socketio = SocketIO(app)
-app.secret_key = "secrete"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///user.db"
+# app.secret_key = "secrete"
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///user.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.secret_key = os.environ.get("SECRET_KEY")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "sqlite:///user.db")
 
 db = SQLAlchemy(app)
 login_manager = LoginManager()
@@ -110,7 +113,6 @@ class CreateForm(FlaskForm):
     create = SubmitField()
 
 
-db.create_all()
 
 
 # registration route
