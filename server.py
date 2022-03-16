@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, abort
 from wtforms import StringField, PasswordField, SubmitField
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired, EqualTo, Length, ValidationError
@@ -188,7 +188,13 @@ def logout():
 @app.route("/chat-page/<room_name>/<room_id>")
 @login_required
 def chat_page(room_name, room_id):
-    return render_template("chat_room.html", user_room=room_name, rooms_id=room_id)
+    print(room_id)
+    search_id = ChartRoom.query.filter_by(meeting_id=room_id).first()
+    if search_id:
+        if current_user.is_authenticated:
+            return render_template("chat_room.html", user_room=room_name, rooms_id=room_id)
+    else:
+        return abort(404)
 
 
 @app.route("/delete-page/<room_id>")
