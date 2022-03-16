@@ -9,11 +9,17 @@ from flask_login import LoginManager, login_user, current_user, UserMixin, logou
 from sqlalchemy.orm import relationship
 from flask_socketio import SocketIO, send, join_room, leave_room, emit
 import os
+import re
+import psycopg2
 
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET")
 app.config['WTF_CSRF_SECRET_KEY'] = "b'f\xfa\x8b{X\x8b\x9eM\x83l\x19\xad\x84\x08\xaa"
+
+uri = os.getenv("DATABASE_URL")
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
 
 
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get('DATABASE_URL', "sqlite:///user.db")
@@ -34,8 +40,6 @@ socketio = SocketIO(app)
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(user_id)
-
-
 
 
 # user database
