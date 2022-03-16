@@ -9,9 +9,6 @@ from flask_login import LoginManager, login_user, current_user, UserMixin, logou
 from sqlalchemy.orm import relationship
 from flask_socketio import SocketIO, send, join_room, leave_room, emit
 import os
-import re
-import psycopg2
-
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET")
@@ -26,7 +23,6 @@ db = SQLAlchemy(app)
 
 # app.secret_key = "secrete"
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///user.db"
-
 
 Bootstrap(app)
 login_manager = LoginManager()
@@ -194,6 +190,18 @@ def chat_page(room_name, room_id):
     return render_template("chat_room.html", user_room=room_name, rooms_id=room_id)
 
 
+@app.route("/delete-page/<room_id>")
+def delete_room(room_id):
+    db.session.delete(ChartRoom.query.get(room_id))
+    db.session.commit()
+    return redirect(url_for('menu_page'))
+
+
+@app.route("/leaving")
+def redirect_me():
+    return redirect(url_for("menu_page"))
+
+
 @socketio.on("incoming")
 def message_handler(data):
     send(data, room=data["room"])
@@ -204,6 +212,13 @@ def message_handler(data):
 def join_handler(data):
     join_room(data['room'])
     emit("user_msg", {"msg": f"{data['username']}   joined the room", "username": data["username"]}, room=data["room"])
+
+
+@socketio.on("leave")
+def leave_the_room(data):
+    leave_room(room=data["room"])
+    print("mand")
+    emit("user_msg", {"msg": f"{data['username']} left the room "}, room=data["room"])
 
 
 if __name__ == "__main__":

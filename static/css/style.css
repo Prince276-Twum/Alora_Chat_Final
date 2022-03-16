@@ -87,7 +87,7 @@
 #sidebar {
     margin-top: 0;
     float: left; /* Make this div as wide as its contents */
-    min-height: 96vh;
+    min-height: 83vh;
     padding-left: 1em;
     padding-top: 20px;
     padding-right:1em;

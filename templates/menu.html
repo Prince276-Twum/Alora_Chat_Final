@@ -43,6 +43,8 @@
                 <div class="collapse" id="room{{user_room.id}}">
                   <div class="card card-body">
                       ID:{{user_room.meeting_id}}
+                      <a class="btn  btn-outline-danger" href="{{url_for('delete_room', room_id=user_room.id)}}">Delete Room</a>
+                      <br>
                       <a class="btn btn-primary" href="{{url_for('chat_page', room_name=user_room.meeting_name, room_id=user_room.meeting_id)}}">Enter Room</a>
                   </div>
                 </div>
@@ -148,7 +150,8 @@
 
 
 {% endif %}
-document.querySelector("body").style.height = "1000px"
+document.querySelector("body").style.height = "0"
+document.querySelector(".chat_logo").style.width = "8.7%"
 document.querySelector("body").onclick = () => {
     document.querySelector("body").style.padding = 0
 }

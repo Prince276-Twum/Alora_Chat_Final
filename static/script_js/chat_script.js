@@ -18,6 +18,12 @@ document.addEventListener("DOMContentLoaded", () => {
     msgerInput.value = "";
  });
 
+    document.querySelector("#leaving01").onclick =  () => {
+    console.log("am in")
+    socket.emit("leave", {"msg": "left the room", "room": room_need, "username" : real_username})
+
+    }
+
 
     socket.on("message", data => {
         if (data.msg) {
