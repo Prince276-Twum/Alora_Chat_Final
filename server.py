@@ -185,8 +185,8 @@ def logout():
 
 
 # chat sections
-@login_required
 @app.route("/chat-page/<room_name>/<room_id>")
+@login_required
 def chat_page(room_name, room_id):
     return render_template("chat_room.html", user_room=room_name, rooms_id=room_id)
 
